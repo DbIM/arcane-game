@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Игра Арканов — групповая онлайн-практика | Прохор Руднев</title>
+  <meta name="description" content="Игра Арканов — групповая онлайн-практика с символикой Таро. Исследуйте свою цель через четыре масти: ресурсы, действия, эмоции и мысли. Определите желаемое участие и свой следующий шаг.">
+  <meta name="author" content="Прохор Руднев">
+  <meta name="theme-color" content="#211713">
+  <meta property="og:title" content="Игра Арканов — сыграй в свою цель">
+  <meta property="og:description" content="Четыре масти. Одна цель. Твой собственный расклад ресурсов, мыслей, эмоций и действий.">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --ink:#2b211b; --ink-soft:#59483a; --muted:#796957;
+      --paper:#eee0bd; --paper-light:#f7edda; --paper-deep:#d9c397;
+      --gold:#a77b36; --gold-dark:#76521f; --wine:#8f3036;
+      --line:rgba(91,64,35,.25); --panel:rgba(255,249,232,.64);
+      --max:1120px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;color:var(--ink);font-family:Manrope,sans-serif;line-height:1.7;background-color:#e9dfca;
+      background-image:radial-gradient(ellipse at 18% 5%,rgba(255,255,255,.7),transparent 34rem),radial-gradient(ellipse at 85% 40%,rgba(169,127,61,.12),transparent 38rem),repeating-linear-gradient(0deg,rgba(92,65,35,.025) 0,rgba(92,65,35,.025) 1px,transparent 1px,transparent 5px)}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.13;z-index:-1;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.25'/%3E%3C/svg%3E")}
+    a{color:inherit}.wrap{width:min(var(--max),calc(100% - 40px));margin:auto}
+    .topline{padding:20px 0;display:flex;justify-content:space-between;align-items:center;gap:20px;color:var(--muted);font-size:.82rem;border-bottom:1px solid var(--line)}
+    .brand{font-weight:800;letter-spacing:.13em;text-transform:uppercase;text-decoration:none;color:var(--ink)}
+    .topline a:last-child{text-decoration:none;border-bottom:1px solid var(--gold)}
+    .hero{min-height:690px;display:grid;grid-template-columns:1.05fr .95fr;gap:42px;align-items:center;padding:70px 0 85px}
+    .eyebrow{display:inline-flex;align-items:center;gap:10px;color:var(--gold-dark);font-size:.7rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+    .eyebrow:before{content:"";width:27px;height:1px;background:var(--gold)}
+    h1,h2,h3,p{margin-top:0}h1,h2,.serif{font-family:"Cormorant Garamond",serif}
+    h1{font-size:clamp(3.5rem,7.3vw,6.6rem);line-height:.88;letter-spacing:-.045em;margin:23px 0;color:var(--ink);font-weight:600}
+    h1 em{font-style:normal;color:var(--wine)}
+    .lead{max-width:620px;font-size:clamp(1.05rem,1.8vw,1.22rem);color:#4d3c30}
+    .hero-note{max-width:570px;color:var(--muted);font-size:.88rem;margin:20px 0 28px}
+    .actions{display:flex;flex-wrap:wrap;gap:12px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;min-height:53px;padding:12px 23px;background:var(--wine);color:#fff8e9;text-decoration:none;font-weight:800;font-size:.88rem;border:1px solid var(--wine);box-shadow:4px 4px 0 rgba(118,82,31,.18);transition:.2s}
+    .btn:hover{transform:translateY(-3px);box-shadow:6px 8px 0 rgba(118,82,31,.18)}
+    .btn.secondary{background:transparent;color:var(--ink);border-color:var(--gold-dark);box-shadow:none}
+    .hero-art{min-height:510px;display:grid;place-items:center;position:relative}
+    .game-board{width:min(100%,480px);aspect-ratio: .91;position:relative;padding:28px;border:1px solid #a77b36;outline:1px solid rgba(118,82,31,.4);outline-offset:7px;background:linear-gradient(135deg,rgba(255,248,225,.95),rgba(216,194,149,.88)),repeating-linear-gradient(45deg,transparent 0 8px,rgba(112,78,38,.04) 8px 9px);box-shadow:0 25px 55px rgba(67,44,22,.2);transform:rotate(1.2deg)}
+    .game-board:before{content:"";position:absolute;inset:12px;border:1px solid rgba(118,82,31,.48);pointer-events:none}
+    .board-top,.board-bottom{position:absolute;left:25px;right:25px;display:flex;justify-content:space-between;color:var(--gold-dark);font-size:.68rem;letter-spacing:.15em;font-weight:800}
+    .board-top{top:22px}.board-bottom{bottom:20px}
+    .board-center{position:absolute;inset:70px 45px;display:grid;place-items:center}
+    .sigil{width:205px;aspect-ratio:1;border:1px solid rgba(118,82,31,.55);border-radius:50%;display:grid;place-items:center;position:relative;color:var(--wine);font:600 7rem/1 "Cormorant Garamond",serif}
+    .sigil:before,.sigil:after{content:"";position:absolute;inset:15px;border:1px solid rgba(118,82,31,.45);transform:rotate(45deg)}
+    .sigil:after{transform:rotate(0);border-radius:50%}
+    .sigil span{position:relative;z-index:1;text-shadow:0 2px 0 rgba(255,255,255,.5)}
+    .mini-card{position:absolute;width:82px;height:125px;padding:6px;background:#ead8ae;border:1px solid var(--gold);box-shadow:3px 5px 12px rgba(54,37,18,.2);display:grid;place-items:center;color:var(--wine);font-size:2rem}
+    .mini-card:before{content:"";position:absolute;inset:4px;border:1px solid rgba(118,82,31,.6)}
+    .mini-card span{position:relative}.c1{top:38px;left:55px;transform:rotate(-8deg)}.c2{top:38px;right:55px;transform:rotate(8deg)}.c3{bottom:38px;left:55px;transform:rotate(7deg)}.c4{bottom:38px;right:55px;transform:rotate(-7deg)}
+    .art-caption{position:absolute;bottom:0;right:0;max-width:210px;color:var(--muted);font:italic 1.15rem "Cormorant Garamond",serif;text-align:right}
+    section{padding:82px 0;border-top:1px solid var(--line)}
+    .section-head{max-width:760px;margin-bottom:34px}.section-head.center{text-align:center;margin-left:auto;margin-right:auto}.section-head.center .eyebrow{justify-content:center}
+    h2{font-size:clamp(2.6rem,5vw,4.35rem);line-height:.98;font-weight:600;margin:15px 0;color:var(--ink)}
+    h2 em{font-style:normal;color:var(--wine)}
+    .section-intro{font-size:1.02rem;color:var(--muted);max-width:720px}
+    .paper-panel{padding:30px;background:var(--panel);border:1px solid rgba(118,82,31,.3);box-shadow:0 10px 28px rgba(80,57,29,.06)}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    .paper-panel h3{font:600 1.65rem "Cormorant Garamond",serif;color:var(--wine);margin-bottom:10px}
+    .paper-panel p:last-child{margin-bottom:0}
+    .quote{border-left:2px solid var(--wine);padding:8px 0 8px 22px;font:600 1.65rem/1.35 "Cormorant Garamond",serif;color:#563c2e}
+    .suits{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .suit{position:relative;min-height:270px;padding:22px 18px;background:linear-gradient(155deg,#f8efd9,#e2cea4);border:1px solid #a77b36;box-shadow:0 8px 20px rgba(75,49,22,.1);text-align:center;overflow:hidden}
+    .suit:before{content:"";position:absolute;inset:7px;border:1px solid rgba(118,82,31,.35);pointer-events:none}
+    .suit-symbol{height:92px;display:grid;place-items:center;color:var(--wine);font:500 4.7rem/1 "Cormorant Garamond",serif}
+    .suit h3{font:600 1.55rem "Cormorant Garamond",serif;margin:3px 0;color:var(--ink)}
+    .suit p{font-size:.84rem;color:var(--muted);margin:0}
+    .suit small{display:block;color:var(--gold-dark);font-weight:800;letter-spacing:.12em;text-transform:uppercase;font-size:.62rem;margin-top:12px}
+    .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;counter-reset:step}
+    .step{padding:24px 21px;background:rgba(255,249,232,.56);border-top:2px solid var(--gold);min-height:190px}
+    .step:before{counter-increment:step;content:"0" counter(step);display:block;color:var(--wine);font-weight:800;font-size:.78rem;letter-spacing:.16em;margin-bottom:20px}
+    .step h3{font:600 1.55rem "Cormorant Garamond",serif;margin-bottom:7px}.step p{color:var(--muted);font-size:.88rem;margin:0}
+    .timeline-note{margin-top:20px;color:var(--muted);font-size:.84rem}
+    .interactive{background:linear-gradient(180deg,rgba(226,206,164,.48),rgba(247,237,218,.35));position:relative;overflow:hidden}
+    .interactive:after{content:"✧";position:absolute;right:5%;top:6%;font:8rem "Cormorant Garamond",serif;color:rgba(167,123,54,.12);pointer-events:none}
+    .suit-picker{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;max-width:900px;margin:0 auto}
+    .suit-choice{appearance:none;cursor:pointer;font:inherit;color:var(--ink);background:linear-gradient(150deg,#f8efd9,#dfc99a);border:1px solid #a77b36;padding:16px 10px;min-height:150px;position:relative;transition:.2s}
+    .suit-choice:before{content:"";position:absolute;inset:5px;border:1px solid rgba(118,82,31,.3);pointer-events:none}
+    .suit-choice:hover,.suit-choice[aria-pressed="true"]{transform:translateY(-5px);box-shadow:0 12px 24px rgba(77,51,23,.15);border-color:var(--wine)}
+    .suit-choice[aria-pressed="true"]{background:#f8e9d0;outline:2px solid rgba(143,48,54,.22)}
+    .suit-choice .symbol{display:block;font:4rem/1 "Cormorant Garamond",serif;color:var(--wine);margin-bottom:8px}
+    .suit-choice strong{font:600 1.25rem "Cormorant Garamond",serif}
+    .suit-detail{display:none;max-width:780px;margin:24px auto 0;padding:27px;background:rgba(255,249,232,.88);border:1px solid rgba(143,48,54,.35);text-align:center;animation:reveal .35s ease both}
+    .suit-detail.visible{display:block}.suit-detail h3{font:600 2rem "Cormorant Garamond",serif;color:var(--wine);margin-bottom:8px}.suit-detail p{color:#59483a;margin:0 auto;max-width:650px}
+    .prompt-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    .prompt{padding:24px;background:rgba(255,249,232,.62);border:1px solid var(--line)}
+    .prompt span{display:block;color:var(--gold-dark);font-size:.68rem;letter-spacing:.16em;font-weight:800;text-transform:uppercase;margin-bottom:12px}
+    .prompt p{font:600 1.55rem/1.3 "Cormorant Garamond",serif;margin:0}
+    .about{display:grid;grid-template-columns:.72fr 1.28fr;gap:34px;align-items:center}
+    .portrait{min-height:360px;background:linear-gradient(145deg,rgba(143,48,54,.12),rgba(167,123,54,.12)),#d8c49b;border:1px solid var(--gold);display:grid;place-items:center;overflow:hidden;color:var(--gold-dark);text-align:center;padding:18px}
+    .portrait img{width:100%;height:100%;min-height:360px;object-fit:cover;object-position:center top;display:block}
+    .facts{display:grid;gap:9px;margin-top:20px}.fact{padding:12px 15px;background:rgba(255,249,232,.65);border-left:2px solid var(--gold);font-size:.88rem;color:#59483a}
+    .info-strip{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:22px}
+    .info{padding:18px;background:rgba(255,249,232,.65);border:1px solid var(--line)}.info strong{display:block;font:600 1.35rem "Cormorant Garamond",serif;color:var(--wine)}.info span{font-size:.8rem;color:var(--muted)}
+    .faq{display:grid;grid-template-columns:1fr 1fr;gap:12px}details{background:rgba(255,249,232,.65);border:1px solid var(--line);padding:18px 20px}summary{cursor:pointer;font-weight:800;font-size:.9rem}details p{color:var(--muted);font-size:.88rem;margin:12px 0 0}
+    .contact{text-align:center;padding:65px 28px;background:linear-gradient(145deg,rgba(255,249,232,.85),rgba(220,199,155,.78));border:1px solid var(--gold);outline:1px solid rgba(118,82,31,.25);outline-offset:6px}
+    .contact p{max-width:640px;margin:0 auto 24px;color:var(--muted)}.contact .eyebrow{justify-content:center}
+    footer{padding:32px 0 45px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;color:#796957;font-size:.78rem}
+    .fineprint{font-size:.76rem;color:#85745f;max-width:850px;margin:18px auto 0}
+    button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var(--wine);outline-offset:4px}
+    @keyframes reveal{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+    @media(max-width:850px){.hero{grid-template-columns:1fr;padding:55px 0 70px;gap:15px}.hero-art{min-height:470px}.suits{grid-template-columns:1fr 1fr}.steps{grid-template-columns:1fr 1fr}.about{grid-template-columns:1fr 1.4fr}}
+    @media(max-width:620px){.wrap{width:min(100% - 28px,var(--max))}.topline{align-items:flex-start;flex-direction:column;gap:7px}.hero{padding-top:45px}.hero-art{min-height:390px}.game-board{width:min(88%,390px);padding:18px}.board-center{inset:65px 30px}.sigil{width:155px;font-size:5.5rem}.mini-card{width:62px;height:96px;font-size:1.6rem}.c1,.c3{left:28px}.c2,.c4{right:28px}.c1,.c2{top:34px}.c3,.c4{bottom:34px}.art-caption{right:0;bottom:-5px;font-size:1rem}section{padding:60px 0}.two-col,.prompt-grid,.faq{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.suit-picker{grid-template-columns:1fr 1fr}.suit-choice{min-height:130px}.about{grid-template-columns:1fr}.portrait,.portrait img{min-height:260px}.info-strip{grid-template-columns:1fr}.contact{padding:48px 19px}.btn{width:100%}}
+    @media(max-width:390px){.steps{grid-template-columns:1fr}.suits{gap:9px}.suit{padding:18px 12px;min-height:245px}.suit-symbol{font-size:3.8rem}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <header class="wrap topline">
+    <a class="brand" href="https://provoke.expert/">Прохор Руднев</a>
+    <span>Групповая онлайн-практика · игра с символами Таро</span>
+    <a href="https://t.me/ProkhorDjan" target="_blank" rel="noopener noreferrer">Связаться с ведущим</a>
+  </header>
+
+  <main>
+    <div class="wrap hero">
+      <div>
+        <div class="eyebrow">Авторская игра с символами Таро</div>
+        <h1>ИГРА<br><em>АРКАНОВ</em></h1>
+        <p class="lead">Одна цель. Четыре масти. Несколько неожиданных вопросов к самому себе. Посмотри, сколько тебя уже есть в том, к чему ты стремишься, и каким ты хочешь видеть своё участие дальше.</p>
+        <p class="hero-note">Это групповая онлайн-практика, в которой личная карта цели встречается с символическим языком Таро. Здесь не нужно угадывать будущее — интереснее исследовать настоящее и выбрать свой следующий ход.</p>
+        <div class="actions">
+          <a class="btn" href="#contact">Хочу сыграть</a>
+          <a class="btn secondary" href="#how">Узнать правила игры</a>
+        </div>
+      </div>
+      <div class="hero-art" aria-label="Стилизованное игровое поле с четырьмя картами Таро">
+        <div class="game-board">
+          <div class="board-top"><span>✧ ARCANUM ✧</span><span>IV</span></div>
+          <div class="mini-card c1"><span>♜</span></div><div class="mini-card c2"><span>☽</span></div>
+          <div class="mini-card c3"><span>✧</span></div><div class="mini-card c4"><span>♙</span></div>
+          <div class="board-center"><div class="sigil"><span>✧</span></div></div>
+          <div class="board-bottom"><span>РЕСУРСЫ · МЫСЛИ</span><span>ЭМОЦИИ · ДЕЙСТВИЯ</span></div>
+        </div>
+        <div class="art-caption">Твой запрос — игровое поле.<br>Твой выбор — следующий ход.</div>
+      </div>
+    </div>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">Суть игры</div>
+          <h2>А что, если посмотреть на свою цель <em>как на расклад?</em></h2>
+          <p class="section-intro">Мы часто думаем о том, чего хотим достичь, но не всегда замечаем, сколько внимания, сил и реальных действий уже направляем туда. «Игра Арканов» предлагает разложить это на четыре понятные составляющие и посмотреть на них через символы Таро.</p>
+        </div>
+        <div class="two-col">
+          <article class="paper-panel">
+            <h3>Это не гадание на результат</h3>
+            <p>Ты сам выбираешь цель и сам оцениваешь своё нынешнее участие. Карты не решают за тебя и не сообщают, что обязательно произойдёт. Их образы и традиционные значения становятся дополнительным языком для размышления.</p>
+          </article>
+          <article class="paper-panel">
+            <h3>Это игра с собственной картой</h3>
+            <p>Сначала ты отмечаешь, как обстоят дела сейчас. Затем представляешь, каким хочешь видеть своё участие через месяц. Между этими двумя раскладами появляется пространство для вопросов, идей и возможных решений.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="suits">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">Четыре масти · четыре измерения</div>
+          <h2>Из чего складывается <em>твоё участие?</em></h2>
+          <p class="section-intro">В игре четыре показателя. Каждый участник самостоятельно оценивает, сколько этого элемента сейчас присутствует в движении к его цели.</p>
+        </div>
+        <div class="suits">
+          <article class="suit"><div class="suit-symbol">♙</div><h3>Пентакли</h3><p>Ресурсы, которыми ты располагаешь и которые вкладываешь.</p><small>На что я опираюсь?</small></article>
+          <article class="suit"><div class="suit-symbol">♜</div><h3>Жезлы</h3><p>Действия, инициативы и конкретные шаги в сторону цели.</p><small>Что я делаю?</small></article>
+          <article class="suit"><div class="suit-symbol">☽</div><h3>Кубки</h3><p>Эмоции, чувства и внутреннее отношение к задуманному.</p><small>Что я переживаю?</small></article>
+          <article class="suit"><div class="suit-symbol">⚔</div><h3>Мечи</h3><p>Мысли, решения, идеи и то, как ты осмысляешь свой путь.</p><small>О чём я думаю?</small></article>
+        </div>
+        <p class="fineprint">В этой авторской системе масти используются как символические ориентиры для четырёх показателей игры. Это не психологическая диагностика и не универсальная трактовка личности.</p>
+      </div>
+    </section>
+
+    <section id="how">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">Правила и маршрут</div>
+          <h2>Как проходит <em>Игра Арканов?</em></h2>
+          <p class="section-intro">Каждый участник подключается к общей онлайн-встрече с включённой камерой и получает собственный цифровой холст с игровым полем. Ведущий последовательно проводит группу по этапам.</p>
+        </div>
+        <div class="steps">
+          <article class="step"><h3>Выбрать цель</h3><p>Ты записываешь одну конкретную цель — небольшую и достаточно близкую, чтобы её можно было реально приблизить в обозримом будущем.</p></article>
+          <article class="step"><h3>Сделать расклад «Сейчас»</h3><p>Оцениваешь по четырём мастям, сколько ресурсов, действий, эмоций и мыслей вкладываешь в цель на данный момент.</p></article>
+          <article class="step"><h3>Посмотреть на символы</h3><p>Ведущий знакомит группу с выпавшими сочетаниями и рассказывает о традиционных значениях соответствующих карт Таро.</p></article>
+          <article class="step"><h3>Создать расклад «Через месяц»</h3><p>Представляешь, каким хочешь видеть своё участие в достижении этой цели через месяц, и снова отмечаешь четыре показателя.</p></article>
+          <article class="step"><h3>Найти опору и помехи</h3><p>Исследуешь, откуда могут взяться силы для желаемых изменений и что способно помешать двигаться в выбранном направлении.</p></article>
+          <article class="step"><h3>Выбрать свой следующий ход</h3><p>Забираешь с собой что-то одно: мысль, эмоцию, ресурс или действие, которое хочется сохранить после встречи.</p></article>
+        </div>
+        <p class="timeline-note">Это не соревнование и не проверка на правильность. Здесь нет победителей и проигравших: каждый проходит собственный маршрут в комфортном для себя темпе.</p>
+      </div>
+    </section>
+
+    <section class="interactive" id="try">
+      <div class="wrap">
+        <div class="section-head center">
+          <div class="eyebrow">Небольшое знакомство</div>
+          <h2>Выбери <em>свою масть</em></h2>
+          <p class="section-intro">Нажми на одну из четырёх карт. Это не тест и не предсказание — просто маленькая возможность познакомиться с символическим языком игры.</p>
+        </div>
+        <div class="suit-picker" role="group" aria-label="Выбрать масть">
+          <button class="suit-choice" type="button" data-suit="pentacles" aria-pressed="false"><span class="symbol">♙</span><strong>Пентакли</strong></button>
+          <button class="suit-choice" type="button" data-suit="wands" aria-pressed="false"><span class="symbol">♜</span><strong>Жезлы</strong></button>
+          <button class="suit-choice" type="button" data-suit="cups" aria-pressed="false"><span class="symbol">☽</span><strong>Кубки</strong></button>
+          <button class="suit-choice" type="button" data-suit="swords" aria-pressed="false"><span class="symbol">⚔</span><strong>Мечи</strong></button>
+        </div>
+        <div class="suit-detail" id="suit-detail" aria-live="polite" aria-atomic="true">
+          <h3 id="suit-title"></h3><p id="suit-copy"></p>
+        </div>
+        <p class="fineprint" style="text-align:center">Выбор карты на этой странице ни на что не влияет и не определяет, какая карта достанется тебе во время встречи.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">Вопросы игрового поля</div>
+          <h2>На что ты посмотришь <em>по-новому?</em></h2>
+          <p class="section-intro">В ходе игры ты не просто отмечаешь показатели. Ты задаёшь себе вопросы, которые помогают связать желаемое будущее с тем, что доступно уже сейчас.</p>
+        </div>
+        <div class="prompt-grid">
+          <article class="prompt"><span>Точка настоящего</span><p>Сколько меня сейчас — в моей цели?</p></article>
+          <article class="prompt"><span>Образ будущего</span><p>Каким я хочу видеть своё участие в достижении этой цели через месяц?</p></article>
+          <article class="prompt"><span>Поиск опоры</span><p>Где я возьму силы и ресурсы для этого?</p></article>
+          <article class="prompt"><span>Возможные препятствия</span><p>Что может помешать мне?</p></article>
+        </div>
+        <div style="margin-top:24px" class="quote">«Не обязательно менять всё сразу. Иногда достаточно заметить один элемент, которому хочется уделить больше внимания».</div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">Что останется после игры</div>
+          <h2>Один символический ход, который ты <em>заберёшь с собой</em></h2>
+          <p class="section-intro">В финале каждый участник выбирает что-то одно — не весь список обещаний, а одну вещь, которую хочется унести из сегодняшней встречи в обычную жизнь.</p>
+        </div>
+        <div class="two-col">
+          <article class="paper-panel"><h3>Мысль</h3><p>Новая формулировка, идея или взгляд на свою цель, к которому хочется возвращаться.</p></article>
+          <article class="paper-panel"><h3>Эмоция</h3><p>Чувство или состояние, которое хочется поддержать и взять с собой.</p></article>
+          <article class="paper-panel"><h3>Ресурс</h3><p>То, на что можно опереться: время, знания, помощь, навык или доступная возможность.</p></article>
+          <article class="paper-panel"><h3>Действие</h3><p>Один небольшой и понятный шаг, который участник сам выбирает для себя.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap about">
+        <div class="portrait"><img src="me.png" alt="Прохор Руднев" onerror="this.style.display='none';this.parentElement.textContent='Здесь размещается фотография ведущего';"></div>
+        <div>
+          <div class="eyebrow">Ведущий игры</div>
+          <h2>Прохор Руднев</h2>
+          <p class="section-intro">Провокативный психолог, семейный и гипнотерапевт. В работе использую юмор, метафоры и образные практики. В «Игре Арканов» я соединяю структуру самостоятельного исследования с символическим языком Таро и помогаю участникам рассмотреть собственную карту цели с разных сторон.</p>
+          <div class="facts">
+            <div class="fact">Частная практика — с 2024 года</div>
+            <div class="fact">Практические занятия по провокативной терапии — с 2025 года</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">Организационные детали</div>
+          <h2>Твоя карта уже <em>ждёт своего игрока</em></h2>
+          <p class="section-intro">Встреча проходит онлайн. Для участия понадобится устройство с камерой, стабильный интернет и возможность спокойно включиться в общую работу.</p>
+        </div>
+        <div class="info-strip">
+          <div class="info"><strong>Онлайн</strong><span>Общая встреча с включёнными камерами</span></div>
+          <div class="info"><strong>Личный холст</strong><span>Индивидуальная игровая карта для каждого участника</span></div>
+          <div class="info"><strong>Таро + вопросы</strong><span>Самооценка четырёх показателей и разбор символики карт</span></div>
+        </div>
+        <p class="fineprint">Дату, продолжительность, размер группы и стоимость участия можно уточнить у ведущего. Эти параметры не указаны на странице, чтобы не публиковать неподтверждённые условия.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head"><div class="eyebrow">Частые вопросы</div><h2>Перед тем как <em>сделать ход</em></h2></div>
+        <div class="faq">
+          <details><summary>Это гадание на Таро?</summary><p>Нет. В игре нет задачи предсказать будущее или получить от карт готовое решение. Участники сами оценивают свои показатели, а ведущий знакомит их с традиционной символикой выпавших карт. Трактовки предлагаются как материал для размышления, а не как установленный факт о человеке.</p></details>
+          <details><summary>Нужно ли знать значения карт Таро?</summary><p>Нет. Специальные знания и собственная колода не требуются. Ведущий объясняет символику карт по ходу встречи.</p></details>
+          <details><summary>Нужно ли показывать свою цель группе?</summary><p>Участники подключаются к общей встрече, но личную цель и оценки каждый размещает на своём отдельном онлайн-холсте. Перед встречей можно уточнить у ведущего, какие части работы предполагают обсуждение вслух.</p></details>
+          <details><summary>Что если моя цель большая и сложная?</summary><p>Для игры лучше выбрать небольшой, конкретный и относительно быстро осуществимый результат. Так проще увидеть собственное участие и представить желаемые изменения на горизонте месяца.</p></details>
+          <details><summary>Что означают четыре масти?</summary><p>В рамках этой игры Пентакли обозначают ресурсы, Жезлы — действия, Кубки — эмоции, Мечи — мысли. Это условная авторская карта четырёх показателей, а не единственно возможное толкование мастей в Таро.</p></details>
+          <details><summary>Это психотерапия или диагностика?</summary><p>«Игра Арканов» описана как групповая рефлексивная практика с игровыми и символическими элементами. Она не является медицинской диагностикой и не заменяет необходимую человеку профессиональную помощь.</p></details>
+          <details><summary>Нужно ли включать камеру?</summary><p>Да, формат встречи предполагает, что участники подключаются с включёнными камерами.</p></details>
+          <details><summary>Обязательно ли делиться личными переживаниями?</summary><p>Нет необходимости рассказывать больше, чем тебе комфортно. Можно обозначить границы участия и заранее обсудить с ведущим, как устроено обсуждение в группе.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap">
+        <div class="contact">
+          <div class="eyebrow">Приглашение к игре</div>
+          <h2>Какую цель ты принесёшь <em>на игровое поле?</em></h2>
+          <p>Напиши мне в Telegram. Я расскажу о ближайшей встрече, организационных условиях и отвечу на вопросы. Можно сначала познакомиться с форматом — решение об участии останется за тобой.</p>
+          <a class="btn" href="https://t.me/ProkhorDjan" target="_blank" rel="noopener noreferrer">Написать Прохору в Telegram</a>
+          <p class="fineprint">Участие добровольное. До согласования даты, условий и стоимости никаких обязательств нет.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap">
+    <span>© Прохор Руднев</span>
+    <span>ИГРА АРКАНОВ · Четыре масти. Одна цель. Твой ход.</span>
+  </footer>
+
+  <script>
+    (function(){
+      const texts={
+        pentacles:{title:'Пентакли — мир ресурсов',copy:'В символическом языке этой игры Пентакли связаны с тем, что помогает воплощать намерение: временем, силами, знаниями, навыками, поддержкой и другими доступными опорами. Вопрос для размышления: на что я уже могу опереться? Что ещё может стать ресурсом?'},
+        wands:{title:'Жезлы — мир действий',copy:'Жезлы здесь напоминают об инициативе и движении. Это не только большие поступки, но и небольшие шаги, которые превращают намерение в практику. Вопрос для размышления: что я уже делаю? Какое действие станет следующим?'},
+        cups:{title:'Кубки — мир эмоций',copy:'Кубки приглашают обратить внимание на эмоциональную сторону цели: интерес, воодушевление, сомнения, удовольствие и другие переживания. Вопрос для размышления: что я чувствую, когда думаю о своей цели?'},
+        swords:{title:'Мечи — мир мыслей',copy:'Мечи связаны с идеями, решениями, планами и внутренними объяснениями происходящего. Вопрос для размышления: какие мысли помогают мне двигаться, а какие требуют дополнительного внимания?'}
+      };
+      const buttons=[...document.querySelectorAll('.suit-choice')];
+      const panel=document.getElementById('suit-detail');
+      const title=document.getElementById('suit-title');
+      const copy=document.getElementById('suit-copy');
+      buttons.forEach(button=>button.addEventListener('click',()=>{
+        const data=texts[button.dataset.suit]; if(!data)return;
+        buttons.forEach(item=>item.setAttribute('aria-pressed',String(item===button)));
+        title.textContent=data.title;copy.textContent=data.copy;panel.classList.add('visible');
+      }));
+    })();
+  </script>
+</body>
+</html>
