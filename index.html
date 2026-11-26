@@ -44,7 +44,7 @@
     .btn:hover{transform:translateY(-3px);box-shadow:6px 8px 0 rgba(118,82,31,.18)}
     .btn.secondary{background:transparent;color:var(--ink);border-color:var(--gold-dark);box-shadow:none}
     .hero-art{min-height:510px;display:grid;place-items:center;position:relative}
-    .game-board{width:min(100%,480px);aspect-ratio: .91;position:relative;padding:28px;border:1px solid #a77b36;outline:1px solid rgba(118,82,31,.4);outline-offset:7px;background:linear-gradient(135deg,rgba(255,248,225,.95),rgba(216,194,149,.88)),repeating-linear-gradient(45deg,transparent 0 8px,rgba(112,78,38,.04) 8px 9px);box-shadow:0 25px 55px rgba(67,44,22,.2);transform:rotate(1.2deg)}
+    .game-board{width:min(100%,480px);aspect-ratio: .91;position:relative;padding:28px;border:1px solid #a77b36;outline:1px solid rgba(118,82,31,.4);outline-offset:7px;background: linear-gradient(135deg, #f8efd9, #e2cea4);box-shadow:0 25px 55px rgba(67,44,22,.2);transform:rotate(1.2deg)}
     .game-board:before{content:"";position:absolute;inset:12px;border:1px solid rgba(118,82,31,.48);pointer-events:none}
     .board-top,.board-bottom{position:absolute;left:25px;right:25px;display:flex;justify-content:space-between;color:var(--gold-dark);font-size:.68rem;letter-spacing:.15em;font-weight:800}
     .board-top{top:22px}.board-bottom{bottom:20px}
@@ -111,7 +111,36 @@
     @media(max-width:620px){.wrap{width:min(100% - 28px,var(--max))}.topline{align-items:flex-start;flex-direction:column;gap:7px}.hero{padding-top:45px}.hero-art{min-height:390px}.game-board{width:min(88%,390px);padding:18px}.board-center{inset:65px 30px}.sigil{width:155px;font-size:5.5rem}.mini-card{width:62px;height:96px;font-size:1.6rem}.c1,.c3{left:28px}.c2,.c4{right:28px}.c1,.c2{top:34px}.c3,.c4{bottom:34px}.art-caption{right:0;bottom:-5px;font-size:1rem}section{padding:60px 0}.two-col,.prompt-grid,.faq{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.suit-picker{grid-template-columns:1fr 1fr}.suit-choice{min-height:130px}.about{grid-template-columns:1fr}.portrait,.portrait img{min-height:260px}.info-strip{grid-template-columns:1fr}.contact{padding:48px 19px}.btn{width:100%}}
     @media(max-width:390px){.steps{grid-template-columns:1fr}.suits{gap:9px}.suit{padding:18px 12px;min-height:245px}.suit-symbol{font-size:3.8rem}}
     @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}}
-  </style>
+ 
+.arcanum-background {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: center;
+    object-position: center center;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.hero-art > *:not(.arcanum-background) {
+    position: relative;
+    z-index: 1;
+}
+
+.game-board > .arcanum-background {
+    z-index: 0;
+}
+
+.game-board > .board-top,
+.game-board > .board-bottom,
+.game-board > .board-center,
+.game-board > .mini-card {
+    position: absolute;
+    z-index: 2;
+}
+ 
+ </style>
 </head>
 <body>
   <header class="wrap topline">
@@ -133,10 +162,12 @@
         </div>
       </div>
       <div class="hero-art" aria-label="Стилизованное игровое поле с четырьмя картами Таро">
+        
         <div class="game-board">
+          <img class="arcanum-background" src="arcane.jpg" alt="">
           <div class="board-top"><span>✧ ARCANUM ✧</span><span>IV</span></div>
-          <div class="mini-card c1"><span>♜</span></div><div class="mini-card c2"><span>☽</span></div>
-          <div class="mini-card c3"><span>✧</span></div><div class="mini-card c4"><span>♙</span></div>
+          <div class="mini-card c1"><span>⛤</span></div><div class="mini-card c2"><span>⚚</span></div>
+          <div class="mini-card c3"><span>🍷︎</span></div><div class="mini-card c4"><span>⚔</span></div>
           <div class="board-center"><div class="sigil"><span>✧</span></div></div>
           
         </div>
